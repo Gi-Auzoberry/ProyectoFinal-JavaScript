@@ -138,12 +138,21 @@ footer .contenedor-footer {
     background-color: #1b3e36;
     color: #f6f2ef;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10rem;
 }
 footer .logo2 {
     width: 8rem;
 }
-footer .logo2-name {
+footer h5 {
     font-family: 'DM Serif Display', serif; 
+    padding-bottom: 10px;
+}
+footer .contact-footer {
+    font-size: 15px;
+    font-weight: 200;
 }
 footer i{
     color: #f6f2ef;
@@ -154,7 +163,6 @@ footer .bottom {
     background-color: #9f6544;
     color: #1b3e36;
 }
-
 footer .bottom p{
     margin: 0;
 }
