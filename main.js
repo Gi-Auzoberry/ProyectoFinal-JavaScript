@@ -16,7 +16,6 @@ const items = [
     { codigo: 6, producto: 'Plantas', precio: 10000, imagen: "https://images.unsplash.com/photo-1601985705806-5b9a71f6004f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
 ]
 
-
 let carrito = JSON.parse(localStorage.getItem("carritoGuardado")) || []
 
 const contenido = document.querySelector("div.productosItems")
@@ -26,7 +25,7 @@ const itemsEnCarrito = document.querySelector("div.carritoItems")
 function crearContenido(item) {
     return `<div class="cards">
                 <img src= "${item.imagen}">
-                <h3> ${item.producto} </h3>
+                <h5> ${item.producto} </h5>
                 <p> $${item.precio} </p>
                 <button id="${item.codigo}" class="agregar"> Agregar </button>
             </div>`
@@ -56,7 +55,7 @@ verCarrito.addEventListener("click", (e) => {
 
     if (carrito.length === 0) {
         itemsEnCarrito.innerHTML = `<h3>No hay nada en el carrito</h3>
-                                    <button id="cerrarVacio" class="btn-cierra"> X </i> </button>`
+                                    <button id="cerrarVacio" class="btn-cierra"> X </button>`
         const cerrarVacioBoton = document.querySelector("#cerrarVacio")
         cerrarVacioBoton.addEventListener("click", (e) => {
             itemsEnCarrito.style.display = "none"
@@ -65,7 +64,7 @@ verCarrito.addEventListener("click", (e) => {
         const carritoEmergente = document.createElement("div")
         carritoEmergente.className = "emergente"
         carritoEmergente.innerHTML = `<h1> Carrito </h1>
-                                      <button id="cerrar" class="btn-cierra"> X </i> </button>`
+                                      <button id="cerrar" class="btn-cierra"> X </button>`
         itemsEnCarrito.append(carritoEmergente)
 
         const cerrarBoton = document.querySelector("#cerrar")

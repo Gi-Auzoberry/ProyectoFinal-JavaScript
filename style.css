@@ -32,7 +32,6 @@ header .navbar a:hover{
     font-weight: 600;
 }
 i{
-    color: #9f6544;
     font-size: 1.5rem;
     margin: 10px;
     cursor: pointer;
@@ -83,7 +82,7 @@ i{
 .productosItems img {
     height: 30rem;
 }
-.productosItems h3{
+.productosItems h5{
     color: #1b3e36;
     font-weight: 400;
 }
@@ -98,11 +97,12 @@ i{
     border-radius: 5px;
     border: none;
 }
+
 .carritoItems{
     width: 60%;
     background-color: rgba(27, 62, 54, 0.966);
     color: #f6f2ef;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     position: fixed;
@@ -153,9 +153,6 @@ footer h5 {
 footer .contact-footer {
     font-size: 15px;
     font-weight: 200;
-}
-footer i{
-    color: #f6f2ef;
 }
 footer .bottom {
     padding: 20px;
