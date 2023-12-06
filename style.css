@@ -11,13 +11,16 @@ body{
     background-color: #f6f2ef;
 }
 header{
+    padding: 0 20px;
     background-color: #f6f2ef;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1;
+}
+header .logo1 {
+    width: 5rem;
 }
 header .navbar a{
     margin: 30px;
@@ -129,4 +132,21 @@ i{
 }
 .alert {
     display: none;
+}
+
+footer {
+    background-color: #1b3e36;
+    color: #f6f2ef;
+    padding: 20px;
+}
+
+footer .logo2 {
+    width: 8rem;
+}
+footer .logo2-name {
+    font-family: 'DM Serif Display', serif; 
+}
+
+footer i{
+    color: #f6f2ef;
 }
