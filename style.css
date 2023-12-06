@@ -134,19 +134,27 @@ i{
     display: none;
 }
 
-footer {
+footer .contenedor-footer {
     background-color: #1b3e36;
     color: #f6f2ef;
     padding: 20px;
 }
-
 footer .logo2 {
     width: 8rem;
 }
 footer .logo2-name {
     font-family: 'DM Serif Display', serif; 
 }
-
 footer i{
     color: #f6f2ef;
+}
+footer .bottom {
+    padding: 20px;
+    text-align: center;
+    background-color: #9f6544;
+    color: #1b3e36;
+}
+
+footer .bottom p{
+    margin: 0;
 }
