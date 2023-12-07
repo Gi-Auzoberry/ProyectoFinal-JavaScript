@@ -1,9 +1,9 @@
-function Compra(carritodeCompra) {
-    this.carrito = carritodeCompra
-    this.total = function () {
-        if (this.carrito.length > 0) {
-            return this.carrito.reduce((suma, item) => suma + item.precio, 0)
-        }
+class Compra {
+    constructor(carritodeCompra) {
+        this.carrito = carritodeCompra;
+    }
+    total() {
+        return this.carrito.reduce((suma, item) => suma + item.precio, 0);
     }
 }
 
@@ -47,13 +47,13 @@ function cargarContenido() {
     items.forEach((item) => contenido.innerHTML += crearContenido(item))
     comprar()
 }
-function carga2() {
+function cargarContenido2() {
     fetch(URL)
     .then((response) => response.json())
     .then((data) => items.push(...data))
     .then(() => cargarContenido())
 }
-carga2()
+cargarContenido2()
 
 verCarrito.addEventListener("click", (e) => {
     itemsEnCarrito.innerHTML = ""
@@ -108,5 +108,4 @@ verCarrito.addEventListener("click", (e) => {
         })
     }
 })
-
 
