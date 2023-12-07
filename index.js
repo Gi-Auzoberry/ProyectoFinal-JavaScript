@@ -7,14 +7,8 @@ function Compra(carritodeCompra) {
     }
 }
 
-const items = [
-    { codigo: 1, producto: 'Cafe', precio: 2500, imagen: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-    { codigo: 2, producto: 'Bubble Tea', precio: 3000, imagen: "https://images.unsplash.com/photo-1558857563-b371033873b8?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-    { codigo: 3, producto: 'Sandwiches', precio: 4500, imagen: "https://images.unsplash.com/photo-1540713434306-58505cf1b6fc?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-    { codigo: 4, producto: 'Pasteles', precio: 5000, imagen: "https://images.unsplash.com/photo-1595080622896-844ff207e639?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-    { codigo: 5, producto: 'Helados', precio: 1500, imagen: "https://images.unsplash.com/photo-1549395156-e0c1fe6fc7a5?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-    { codigo: 6, producto: 'Plantas', precio: 10000, imagen: "https://images.unsplash.com/photo-1601985705806-5b9a71f6004f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-]
+const URL = "./items.json"
+const items = []
 
 let carrito = JSON.parse(localStorage.getItem("carritoGuardado")) || []
 
@@ -30,13 +24,6 @@ function crearContenido(item) {
                 <button id="${item.codigo}" class="agregar"> Agregar </button>
             </div>`
 }
-
-function cargarContenido() {
-    items.forEach((item) => contenido.innerHTML += crearContenido(item))
-    comprar()
-}
-cargarContenido();
-
 function comprar() {
     const agregado = document.querySelectorAll("button.agregar")
     agregado.forEach((btn) => {
@@ -48,13 +35,24 @@ function comprar() {
         })
     })
 }
+function cargarContenido() {
+    items.forEach((item) => contenido.innerHTML += crearContenido(item))
+    comprar()
+}
+function carga2() {
+    fetch(URL)
+    .then((response) => response.json())
+    .then((data) => items.push(...data))
+    .then(() => cargarContenido())
+}
+carga2()
 
 verCarrito.addEventListener("click", (e) => {
     itemsEnCarrito.innerHTML = ""
     itemsEnCarrito.style.display = "flex"
 
     if (carrito.length === 0) {
-        itemsEnCarrito.innerHTML = `<h3>No hay nada en el carrito</h3>
+        itemsEnCarrito.innerHTML = `<h4>No hay productos en tu carrito</h4>
                                     <button id="cerrarVacio" class="btn-cierra"> X </button>`
         const cerrarVacioBoton = document.querySelector("#cerrarVacio")
         cerrarVacioBoton.addEventListener("click", (e) => {
@@ -63,7 +61,7 @@ verCarrito.addEventListener("click", (e) => {
     } else {
         const carritoEmergente = document.createElement("div")
         carritoEmergente.className = "emergente"
-        carritoEmergente.innerHTML = `<h1> Carrito </h1>
+        carritoEmergente.innerHTML = `<h3> Carrito </h3> 
                                       <button id="cerrar" class="btn-cierra"> X </button>`
         itemsEnCarrito.append(carritoEmergente)
 
@@ -77,7 +75,8 @@ verCarrito.addEventListener("click", (e) => {
             interiorCarrito.className = "productosCarrito"
             interiorCarrito.innerHTML = `<img src= "${product.imagen}">
                                          <h3> ${product.producto} </h3>
-                                         <p> $${product.precio} </p>`
+                                         <p> $${product.precio} </p>
+                                         <hr>`
             itemsEnCarrito.append(interiorCarrito)
         })
 
@@ -101,3 +100,5 @@ verCarrito.addEventListener("click", (e) => {
         })
     }
 })
+
+
