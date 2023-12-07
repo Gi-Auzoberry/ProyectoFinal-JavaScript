@@ -32,6 +32,14 @@ function comprar() {
             const seleccion = items.find((item) => item.codigo === codigo)
             carrito.push(seleccion)
             localStorage.setItem("carritoGuardado", JSON.stringify(carrito))
+
+            Toastify({
+                text: `Se agregó ${seleccion.producto} al carrito`,
+                duration: 2000,
+                stopOnFocus: false,
+                className: "info",
+                style: {background: "#9f6544"}
+              }).showToast();
         })
     })
 }
