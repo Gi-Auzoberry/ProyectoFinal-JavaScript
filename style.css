@@ -31,6 +31,9 @@ header .navbar a:hover{
     color: #9f6544;
     font-weight: 600;
 }
+#bag {
+    color: #9f6544;
+}
 i{
     font-size: 1.5rem;
     margin: 10px;
