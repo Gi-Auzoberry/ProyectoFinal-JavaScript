@@ -14,6 +14,15 @@ const contenido = document.querySelector("div.productosItems")
 const verCarrito = document.querySelector("#bag")
 const itemsEnCarrito = document.querySelector("div.carritoItems")
 
+function mensajito(mensaje, tiempo, estilo) {
+    Toastify({
+        text: mensaje,
+        duration: tiempo,
+        backgroundColor: estilo,
+        className: "info"
+    }).showToast();
+}
+
 function crearContenido(item) {
     return `<div class="cards">
                 <img src= "${item.imagen}">
@@ -30,13 +39,8 @@ function comprar(items) {
             const seleccion = items.find((item) => item.codigo === codigo)
             carrito.push(seleccion)
             localStorage.setItem("carritoGuardado", JSON.stringify(carrito))
-            Toastify({
-                text: `Se agregó ${seleccion.producto} al carrito`,
-                duration: 2000,
-                stopOnFocus: false,
-                className: "info",
-                style: {background: "#9f6544"}
-            }).showToast();
+            mensajito(`Se agregó ${seleccion.producto} al carrito`, 2000, "linear-gradient(to right, #9f6544b9, #9f6544)")
+
         })
     })
 }
@@ -46,13 +50,29 @@ async function cargarContenido() {
     const items = await response.json()
     items.forEach((item) => contenido.innerHTML += crearContenido(item))
     comprar(items)
+    const campoBusqueda = document.getElementById('busqueda')
+    campoBusqueda.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            const busqueda = this.value
+            const resultados = items.filter(item => item.producto.toLowerCase().includes(busqueda.toLowerCase()))
+            contenido.innerHTML = ''
+            if (resultados.length > 0) {
+                resultados.forEach((item) => contenido.innerHTML += crearContenido(item))
+                comprar(resultados)
+            } else {
+                mensajito(`Disculpa! No contamos con ${busqueda}`, 3000, "#1b3e36")
+                items.forEach((item) => contenido.innerHTML += crearContenido(item))
+                comprar(items)
+            }
+        }
+    })
 }
 cargarContenido()
 
 verCarrito.addEventListener("click", () => {
     itemsEnCarrito.innerHTML = ""
     itemsEnCarrito.style.display = "flex"
-    
+
     if (carrito.length === 0) {
         itemsEnCarrito.innerHTML = `<h4>No hay productos en tu carrito</h4>
                                     <button id="cerrarVacio" class="btn-cierra"> X </button>`
@@ -88,12 +108,15 @@ verCarrito.addEventListener("click", () => {
 
         const btnFin = document.querySelector("#finalizar")
         btnFin.addEventListener("click", (e) => {
-            const alerta = document.querySelector(".alert")
-            alerta.style.display = 'block'
-            itemsEnCarrito.style.display = "none"
-            window.scrollTo(0, document.body.scrollHeight)
-            carrito = []
-            localStorage.setItem("carritoGuardado", JSON.stringify(carrito))
+            mensajito("Un momento! Estamos procesando tu compra...", 3000, "linear-gradient(to right, #9f6544b9, #9f6544)")
+            setTimeout(() => {
+                const alerta = document.querySelector(".alert")
+                alerta.style.display = 'block'
+                itemsEnCarrito.style.display = "none"
+                window.scrollTo(0, document.body.scrollHeight)
+                carrito = [];
+                localStorage.setItem("carritoGuardado", JSON.stringify(carrito))
+            }, 3500)
         })
     }
 })

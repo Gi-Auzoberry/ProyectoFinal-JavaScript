@@ -56,6 +56,19 @@ i{
     font-family: 'DM Serif Display', serif; 
     font-size: 4rem;
 }
+.productos .input-buscar {
+    display: flex;
+    flex-direction: column;
+    color:#9f6544;
+}
+.productos .input-buscar #busqueda{
+    border: #9f6544 solid 1px;
+    border-radius: 5px;
+
+}
+.productos .input-buscar #busqueda:focus {
+    outline-color: #9b7c6ab4;
+  }
 .homeText h3{
     color: #dbd0bd;
     text-align: center;
@@ -133,6 +146,7 @@ i{
 .productosCarrito img{
     height: 8rem;
 }
+
 .alert {
     display: none;
 }
@@ -166,13 +180,3 @@ footer .bottom {
 footer .bottom p{
     margin: 0;
 }
-
-/* #btn-buscar{
-    color: #9f6544;
-    border-color: #9f6544;
-}
-#btn-buscar:hover{
-    background-color: #1b3e36;
-    color: #f6f2ef;
-    border-color: #f6f2ef;
-} */
