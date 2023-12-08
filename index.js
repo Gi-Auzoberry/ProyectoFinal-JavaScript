@@ -1,15 +1,13 @@
 class Compra {
     constructor(carritodeCompra) {
-        this.carrito = carritodeCompra;
+        this.carrito = carritodeCompra
     }
     total() {
-        return this.carrito.reduce((suma, item) => suma + item.precio, 0);
+        return this.carrito.reduce((suma, item) => suma + item.precio, 0)
     }
 }
 
-const URL = "./items.json"
-const items = []
-
+const URL = "./items.json";
 let carrito = JSON.parse(localStorage.getItem("carritoGuardado")) || []
 
 const contenido = document.querySelector("div.productosItems")
@@ -24,60 +22,51 @@ function crearContenido(item) {
                 <button id="${item.codigo}" class="agregar"> Agregar </button>
             </div>`
 }
-function comprar() {
-    const agregado = document.querySelectorAll("button.agregar")
-    agregado.forEach((btn) => {
+
+function comprar(items) {
+    document.querySelectorAll("button.agregar").forEach((btn) => {
         btn.addEventListener("click", (e) => {
             const codigo = parseInt(e.target.id)
             const seleccion = items.find((item) => item.codigo === codigo)
             carrito.push(seleccion)
             localStorage.setItem("carritoGuardado", JSON.stringify(carrito))
-
             Toastify({
                 text: `Se agregó ${seleccion.producto} al carrito`,
                 duration: 2000,
                 stopOnFocus: false,
                 className: "info",
                 style: {background: "#9f6544"}
-              }).showToast();
+            }).showToast();
         })
     })
 }
-function cargarContenido() {
-    items.forEach((item) => contenido.innerHTML += crearContenido(item))
-    comprar()
-}
-function cargarContenido2() {
-    fetch(URL)
-    .then((response) => response.json())
-    .then((data) => items.push(...data))
-    .then(() => cargarContenido())
-}
-cargarContenido2()
 
-verCarrito.addEventListener("click", (e) => {
+async function cargarContenido() {
+    const response = await fetch(URL)
+    const items = await response.json()
+    items.forEach((item) => contenido.innerHTML += crearContenido(item))
+    comprar(items)
+}
+cargarContenido()
+
+verCarrito.addEventListener("click", () => {
     itemsEnCarrito.innerHTML = ""
     itemsEnCarrito.style.display = "flex"
-
+    
     if (carrito.length === 0) {
         itemsEnCarrito.innerHTML = `<h4>No hay productos en tu carrito</h4>
                                     <button id="cerrarVacio" class="btn-cierra"> X </button>`
-        const cerrarVacioBoton = document.querySelector("#cerrarVacio")
-        cerrarVacioBoton.addEventListener("click", (e) => {
+        document.querySelector("#cerrarVacio").addEventListener("click", () => {
             itemsEnCarrito.style.display = "none"
-        });
+        })
     } else {
-        const carritoEmergente = document.createElement("div")
-        carritoEmergente.className = "emergente"
-        carritoEmergente.innerHTML = `<h3> Carrito </h3> 
-                                      <button id="cerrar" class="btn-cierra"> X </button>`
-        itemsEnCarrito.append(carritoEmergente)
-
-        const cerrarBoton = document.querySelector("#cerrar")
-        cerrarBoton.addEventListener("click", (e) => {
+        itemsEnCarrito.innerHTML = `<div class="emergente">
+                                        <h3> Carrito </h3> 
+                                        <button id="cerrar" class="btn-cierra"> X </button>
+                                    </div>`
+        document.querySelector("#cerrar").addEventListener("click", () => {
             itemsEnCarrito.style.display = "none"
-        });
-
+        })
         carrito.forEach((product) => {
             const interiorCarrito = document.createElement("div")
             interiorCarrito.className = "productosCarrito"
@@ -88,8 +77,8 @@ verCarrito.addEventListener("click", (e) => {
             itemsEnCarrito.append(interiorCarrito)
         })
 
-        let compra = new Compra(carrito);
-        let total = compra.total();
+        let compra = new Compra(carrito)
+        let total = compra.total()
 
         const totalCompra = document.createElement("div")
         totalCompra.className = "totalCompra"
@@ -108,4 +97,3 @@ verCarrito.addEventListener("click", (e) => {
         })
     }
 })
-
